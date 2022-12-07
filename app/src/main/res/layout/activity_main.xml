@@ -1,0 +1,41 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/id_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="send"
+        android:stateListAnimator="@null"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/id_fragmnet_container"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
