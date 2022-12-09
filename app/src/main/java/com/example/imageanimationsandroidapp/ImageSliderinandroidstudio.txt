@@ -1,0 +1,79 @@
+// you must use androidx library instead of appcompat v4 or v7 android library
+
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.application.imagesliderexample.MainActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.constraint.ConstraintLayout>
+
+# ImageAdapter.java
+
+import android.content.Context;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+
+public class ImageAdapter extends PagerAdapter {
+    private Context mContext;
+    private int[] mImageIds = new int[]{R.drawable.bee, R.drawable.cello, R.drawable.lion, R.drawable.pumpkin, R.drawable.watch};
+
+    ImageAdapter(Context context) {
+        mContext = context;
+    }
+
+    @Override
+    public int getCount() {
+        return mImageIds.length;
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        ImageView imageView = new ImageView(mContext);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setImageResource(mImageIds[position]);
+        container.addView(imageView, 0);
+        return imageView;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((ImageView) object);
+    }
+}
+
+# MainActivity.java
+
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        ImageAdapter adapter = new ImageAdapter(this);
+        viewPager.setAdapter(adapter);
+    }
+}
+
