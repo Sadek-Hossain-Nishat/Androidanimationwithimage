@@ -43,11 +43,33 @@ public class MainActivity extends AppCompatActivity {
         mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                
+
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        mTextViewState.setText("Collapsed");
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        mTextViewState.setText("Dragging...");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        mTextViewState.setText("Expanded");
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        mTextViewState.setText("Hidden");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        mTextViewState.setText("Settling...");
+                        break;
+
+
+                }
+
             }
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+                mTextViewState.setText("Sliding...");
 
             }
         });
