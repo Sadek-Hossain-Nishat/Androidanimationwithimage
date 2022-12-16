@@ -1,0 +1,81 @@
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.application.textswitcherapp.MainActivity">
+
+    <TextSwitcher
+        android:id="@+id/textSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="next" />
+
+</RelativeLayout>
+
+
+# MainActivity.java
+
+import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.ViewSwitcher;
+
+public class MainActivity extends AppCompatActivity {
+    private TextSwitcher textSwitcher;
+    private Button nextButton;
+    private int stringIndex = 0;
+    private String[] row = {"ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX"};
+    private TextView textView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textSwitcher = findViewById(R.id.textSwitcher);
+        nextButton = findViewById(R.id.button);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stringIndex == row.length - 1) {
+                    stringIndex = 0;
+                    textSwitcher.setText(row[stringIndex]);
+                } else {
+                    textSwitcher.setText(row[++stringIndex]);
+                }
+            }
+        });
+
+        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                textView = new TextView(MainActivity.this);
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(60);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                return textView;
+            }
+        });
+
+        textSwitcher.setText(row[stringIndex]);
+    }
+}
