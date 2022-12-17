@@ -1,0 +1,77 @@
+// add dependecies according to this github link
+
+// https://github.com/rosenpin/fading-text-view
+
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codinginflow.fadingtextviewexample.MainActivity">
+
+    <com.tomer.fadingtextview.FadingTextView
+        android:id="@+id/fading_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        app:texts="@array/example_one"
+        app:timeout="1000" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp"
+        android:onClick="startExample2"
+        android:text="Example 2" />
+
+</RelativeLayout>
+
+
+# arrays.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="example_one">
+        <item>This</item>
+        <item>is</item>
+        <item>example 1</item>
+    </string-array>
+
+</resources>
+
+
+# MainActivity.java
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
+import com.tomer.fadingtextview.FadingTextView;
+
+import java.util.concurrent.TimeUnit;
+
+public class MainActivity extends AppCompatActivity {
+    private FadingTextView fadingTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        fadingTextView = findViewById(R.id.fading_text_view);
+    }
+
+    public void startExample2(View v) {
+        String[] example2 = {"And", "this", "is", "example 2"};
+        fadingTextView.setTexts(example2);
+        fadingTextView.setTimeout(300, TimeUnit.MILLISECONDS);
+        fadingTextView.forceRefresh();
+    }
+}

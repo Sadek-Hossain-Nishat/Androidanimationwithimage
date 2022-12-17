@@ -1,48 +1,30 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/id_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp" />
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp">
 
 
     <Button
-        android:id="@+id/id_button"
+        android:id="@+id/id_button_open_bottom_sheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        app:layout_dodgeInsetEdges="bottom"/>
+        android:text="Open Modal bottom sheet"/>
 
-
-    <androidx.core.widget.NestedScrollView
-        app:layout_insetEdge="bottom"
-
-        android:id="@+id/id_bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:background="@android:color/holo_blue_light"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="55dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:text="@string/dummy_text2"
-            android:textSize="16sp" />
-
-    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button X Clicked"
+        android:textSize="25sp"
+        android:id="@+id/id_text_view_button_clicked"/>
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</LinearLayout>
