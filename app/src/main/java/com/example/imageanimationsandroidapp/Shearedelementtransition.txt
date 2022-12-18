@@ -1,0 +1,130 @@
+# Activity2.java
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.transition.Fade;
+import android.view.View;
+
+public class Activity2 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_2);
+
+        setTitle("Activity 2");
+
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
+    }
+}
+
+
+# activity_2.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical"
+    tools:context="com.example.application.sharedelementexample.Activity2">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cat"
+        android:transitionName="example_transition" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
+
+</LinearLayout>
+
+
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.application.sharedelementexample.MainActivity">
+
+    <ImageView
+        android:id="@+id/image_activity_1"
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="102dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cat"
+        android:transitionName="example_transition" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:text="open activity 2" />
+
+</RelativeLayout>
+
+
+
+# MainActivity.java
+
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.transition.Fade;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        setTitle("Activity 1");
+
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
+
+        final ImageView imageView = findViewById(R.id.image_activity_1);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Activity2.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        MainActivity.this, imageView, ViewCompat.getTransitionName(imageView));
+                startActivity(intent, options.toBundle());
+            }
+        });
+    }
+}
