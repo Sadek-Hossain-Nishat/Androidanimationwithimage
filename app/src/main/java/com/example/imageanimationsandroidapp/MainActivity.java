@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ExampleBottomSheetDialog bottomSheet = new ExampleBottomSheetDialog();
                 bottomSheet.show(getSupportFragmentManager(),"example_bottom_sheet");
-                
+
             }
         });
 

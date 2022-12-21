@@ -1,0 +1,75 @@
+# activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.application.animationexample.MainActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
+
+
+# animation.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/ic_signal_1"
+        android:duration="400" />
+
+    <item
+        android:drawable="@drawable/ic_signal_2"
+        android:duration="400" />
+
+    <item
+        android:drawable="@drawable/ic_signal_3"
+        android:duration="400" />
+
+    <item
+        android:drawable="@drawable/ic_signal_4"
+        android:duration="400" />
+
+    <item
+        android:drawable="@drawable/ic_signal_5"
+        android:duration="400" />
+
+</animation-list>
+
+
+# MainActivity.java
+
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity {
+    AnimationDrawable wifiAnimation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ImageView imageView = (ImageView) findViewById(R.id.image);
+        imageView.setBackgroundResource(R.drawable.animation);
+        wifiAnimation = (AnimationDrawable) imageView.getBackground();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        wifiAnimation.start();
+    }
+}
