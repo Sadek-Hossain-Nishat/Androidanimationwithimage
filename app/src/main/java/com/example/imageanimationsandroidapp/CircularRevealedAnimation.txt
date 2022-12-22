@@ -1,0 +1,114 @@
+# activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.application.exampleproject.MainActivity">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="32dp"
+        android:src="@mipmap/ic_launcher"
+        app:fabSize="normal" />
+
+    <Button
+        android:id="@+id/button_reveal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/button_hide"
+        android:layout_alignBottom="@id/button_hide"
+        android:layout_marginEnd="35dp"
+        android:layout_toStartOf="@id/button_hide"
+        android:text="reveal" />
+
+    <Button
+        android:id="@+id/button_hide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/fab"
+        android:layout_marginEnd="35dp"
+        android:layout_toStartOf="@id/fab"
+        android:text="hide" />
+
+</RelativeLayout>
+
+
+# MainActivity.java
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+    private Button buttonReveal;
+    private Button buttonHide;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        buttonReveal = findViewById(R.id.button_reveal);
+        buttonHide = findViewById(R.id.button_hide);
+
+        buttonReveal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                revealFAB();
+            }
+        });
+
+        buttonHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideFAB();
+            }
+        });
+    }
+
+    private void revealFAB() {
+        View view = findViewById(R.id.fab);
+
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+
+        float finalRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        view.setVisibility(View.VISIBLE);
+
+        anim.start();
+    }
+
+    private void hideFAB() {
+        final View view = findViewById(R.id.fab);
+
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+
+        float initialRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        anim.start();
+    }
+}
