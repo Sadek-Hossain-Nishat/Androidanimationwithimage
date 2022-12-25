@@ -1,0 +1,147 @@
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codinginflow.viewflipperexample.MainActivity">
+
+    <ViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Button" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView1"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView3"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </ViewFlipper>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:onClick="previousView"
+        android:text="Previous" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:onClick="nextView"
+        android:text="Next" />
+
+</RelativeLayout>
+
+
+# MainActivity.java
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
+
+public class MainActivity extends AppCompatActivity {
+    private ViewFlipper viewFlipper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        viewFlipper = findViewById(R.id.view_flipper);
+        TextView textView = new TextView(this);
+        textView.setText("Dynamically added TextView");
+        textView.setGravity(Gravity.CENTER);
+
+        viewFlipper.addView(textView);
+
+        viewFlipper.setFlipInterval(2000);
+        viewFlipper.startFlipping();
+    }
+
+    public void previousView(View v) {
+        viewFlipper.setInAnimation(this, R.anim.slide_in_right);
+        viewFlipper.setOutAnimation(this, R.anim.slide_out_left);
+        viewFlipper.showPrevious();
+    }
+
+    public void nextView(View v) {
+        viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
+        viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
+        viewFlipper.showNext();
+    }
+}
+
+# slide_in_right.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="50%p"
+        android:toXDelta="0" />
+    <alpha
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+</set>
+
+# slide_out_left.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="0"
+        android:toXDelta="-50%p" />
+    <alpha
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0" />
+</set>
+

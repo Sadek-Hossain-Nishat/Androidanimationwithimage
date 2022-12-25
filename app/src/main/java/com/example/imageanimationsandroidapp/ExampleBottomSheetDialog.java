@@ -28,12 +28,18 @@ public class ExampleBottomSheetDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
+                mListener.onButtonClicked("Button 1 clicked");
+                dismiss();
+
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mListener.onButtonClicked("Button 2 clicked");
+                dismiss();
 
             }
         });
