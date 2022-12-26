@@ -1,8 +1,10 @@
 package com.example.imageanimationsandroidapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -13,38 +15,31 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-
-public class MainActivity extends AppCompatActivity implements ExampleBottomSheetDialog.BottomSheetListener {
-
-    private TextView mTextView;
+import java.util.Random;
 
 
+public class MainActivity extends AppCompatActivity {
+    private ImageView bottle;
+    private Random random = new Random();
+    private int lastDir;
+    private boolean spinning;
+
+
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button buttonOpenBottomSheet = findViewById(R.id.id_button_open_bottom_sheet);
-        mTextView = findViewById(R.id.id_text_view_button_clicked);
-        buttonOpenBottomSheet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                ExampleBottomSheetDialog bottomSheet = new ExampleBottomSheetDialog();
-                bottomSheet.show(getSupportFragmentManager(),"example_bottom_sheet");
-
-            }
-        });
+        bottle = findViewById(R.id.id_bottle);
 
 
 
     }
 
-    @Override
-    public void onButtonClicked(String text) {
 
-        mTextView.setText(text);
-
-
-
+    public void spinBottle(View view) {
     }
 }
