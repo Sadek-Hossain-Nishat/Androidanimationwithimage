@@ -3,6 +3,8 @@ package com.example.imageanimationsandroidapp;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,5 +43,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void spinBottle(View view) {
+
+        int newDir = random.nextInt(1800);
+        float pivotX = bottle.getWidth()/2;
+        float pivotY = bottle.getHeight()/2;
+
+        Animation rotate = new RotateAnimation(lastDir,newDir,pivotX,pivotY);
+        rotate.setDuration(2500);
+        rotate.setFillAfter(true);
+        lastDir = newDir;
+        bottle.startAnimation(rotate);
+
+
+
+
     }
 }
