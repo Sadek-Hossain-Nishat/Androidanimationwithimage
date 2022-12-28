@@ -1,0 +1,149 @@
+// add palltete dependecy according to app/build.gradle file
+
+# activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.codinginflow.paletteexample.MainActivity">
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:text="Title Text"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="50sp" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/brussels" />
+
+    <TextView
+        android:id="@+id/text_view_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text Body Text "
+        android:textColor="@android:color/holo_red_light" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="nextSwatch"
+        android:text="Next Swatch" />
+
+</LinearLayout>
+
+
+# MainActivity.java
+
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.graphics.Palette;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+    private LinearLayout rootLayout;
+    private TextView textViewTitle;
+    private TextView textViewBody;
+    private ImageView imageView;
+
+    private Palette.Swatch vibrantSwatch;
+    private Palette.Swatch lightVibrantSwatch;
+    private Palette.Swatch darkVibrantSwatch;
+    private Palette.Swatch mutedSwatch;
+    private Palette.Swatch lightMutedSwatch;
+    private Palette.Swatch darkMutedSwatch;
+
+    private int swatchNumber;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        rootLayout = findViewById(R.id.root_layout);
+        textViewTitle = findViewById(R.id.text_view_title);
+        textViewBody = findViewById(R.id.text_view_body);
+        imageView = findViewById(R.id.image_view);
+
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+
+        Palette.from(bitmap).maximumColorCount(32).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                vibrantSwatch = palette.getVibrantSwatch();
+                lightVibrantSwatch = palette.getLightVibrantSwatch();
+                darkVibrantSwatch = palette.getDarkVibrantSwatch();
+                mutedSwatch = palette.getMutedSwatch();
+                lightMutedSwatch = palette.getLightMutedSwatch();
+                darkMutedSwatch = palette.getDarkMutedSwatch();
+            }
+        });
+    }
+
+    public void nextSwatch(View v) {
+        Palette.Swatch currentSwatch = null;
+
+        switch (swatchNumber) {
+            case 0:
+                currentSwatch = vibrantSwatch;
+                textViewTitle.setText("Vibrant");
+                break;
+            case 1:
+                currentSwatch = lightVibrantSwatch;
+                textViewTitle.setText("Light Vibrant");
+                break;
+            case 2:
+                currentSwatch = darkVibrantSwatch;
+                textViewTitle.setText("Dark Vibrant");
+                break;
+            case 3:
+                currentSwatch = mutedSwatch;
+                textViewTitle.setText("Muted");
+                break;
+            case 4:
+                currentSwatch = lightMutedSwatch;
+                textViewTitle.setText("Light Muted");
+                break;
+            case 5:
+                currentSwatch = darkMutedSwatch;
+                textViewTitle.setText("Dark Muted");
+                break;
+        }
+
+        if (currentSwatch != null) {
+            rootLayout.setBackgroundColor(currentSwatch.getRgb());
+            textViewTitle.setTextColor(currentSwatch.getTitleTextColor());
+            textViewBody.setTextColor(currentSwatch.getBodyTextColor());
+        } else {
+            rootLayout.setBackgroundColor(Color.WHITE);
+            textViewTitle.setTextColor(Color.RED);
+            textViewBody.setTextColor(Color.RED);
+        }
+
+        if (swatchNumber < 5) {
+            swatchNumber++;
+        } else {
+            swatchNumber = 0;
+        }
+    }
+}
+
