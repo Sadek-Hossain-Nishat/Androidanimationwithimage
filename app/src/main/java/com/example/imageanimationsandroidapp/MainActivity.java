@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
-
-
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
