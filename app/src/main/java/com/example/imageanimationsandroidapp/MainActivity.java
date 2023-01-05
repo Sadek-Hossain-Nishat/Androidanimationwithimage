@@ -15,8 +15,6 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Placeholder placeholder;
-    private ConstraintLayout layout;
 
 
 
@@ -26,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        layout = findViewById(R.id.layout);
 
-        placeholder = findViewById(R.id.placeholder);
 
 
 
@@ -37,9 +33,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void swapView(View view) {
 
-        TransitionManager.beginDelayedTransition(layout);
-        placeholder.setContentId(view.getId());
-    }
 }
