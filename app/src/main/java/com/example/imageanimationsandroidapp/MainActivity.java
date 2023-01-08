@@ -2,9 +2,13 @@ package com.example.imageanimationsandroidapp;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
 import android.transition.Transition;
 import android.transition.TransitionManager;
+import android.transition.TransitionValues;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,13 +52,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void swapView(View view) {
 
-        TransitionManager.beginDelayedTransition(layout);
+        // these two lines are optional ,
+        // these are used to show bounds transition effect
+
+        Transition changeBoundes = new ChangeBounds();
+        changeBoundes.setInterpolator(new OvershootInterpolator());
+ // for normal showing
+        //TransitionManager.beginDelayedTransition(layout);
+        // for bounds transition effect
+        // we can use
+        TransitionManager.beginDelayedTransition(layout,changeBoundes);
         if (!altLayout) {
 
             constraintSetNew.applyTo(layout);
             altLayout = true;
         } else {
-            
+
+
+            constraintSetOld.applyTo(layout);
+            altLayout = false;
+
         }
 
 
